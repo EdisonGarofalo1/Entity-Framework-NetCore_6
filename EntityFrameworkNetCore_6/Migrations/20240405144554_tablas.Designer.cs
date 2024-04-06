@@ -4,6 +4,7 @@ using EntityFrameworkNetCore_6.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityFrameworkNetCore_6.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240405144554_tablas")]
+    partial class tablas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +31,15 @@ namespace EntityFrameworkNetCore_6.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("cab_mov_id"), 1L, 1);
+
+                    b.Property<int>("Personaper_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Tipo_Movimientotip_mov_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Usuariousu_id")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("cab_mov_base_imponible")
                         .HasPrecision(18, 2)
@@ -73,11 +84,11 @@ namespace EntityFrameworkNetCore_6.Migrations
 
                     b.HasKey("cab_mov_id");
 
-                    b.HasIndex("per_id");
+                    b.HasIndex("Personaper_id");
 
-                    b.HasIndex("tip_mov_id");
+                    b.HasIndex("Tipo_Movimientotip_mov_id");
 
-                    b.HasIndex("usu_id");
+                    b.HasIndex("Usuariousu_id");
 
                     b.ToTable("Cab_Movimiento");
                 });
@@ -111,6 +122,12 @@ namespace EntityFrameworkNetCore_6.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("det_mov_id"), 1L, 1);
 
+                    b.Property<int>("Cab_Movimientocab_mov_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Productopro_id")
+                        .HasColumnType("int");
+
                     b.Property<int>("cab_mov_id")
                         .HasColumnType("int");
 
@@ -141,9 +158,9 @@ namespace EntityFrameworkNetCore_6.Migrations
 
                     b.HasKey("det_mov_id");
 
-                    b.HasIndex("cab_mov_id");
+                    b.HasIndex("Cab_Movimientocab_mov_id");
 
-                    b.HasIndex("pro_id");
+                    b.HasIndex("Productopro_id");
 
                     b.ToTable("Det_Movimiento");
                 });
@@ -307,24 +324,21 @@ namespace EntityFrameworkNetCore_6.Migrations
                 {
                     b.HasOne("EntityFrameworkNetCore_6.Models.Entity.Persona", "Persona")
                         .WithMany("Cab_Movimientos")
-                        .HasForeignKey("per_id")
+                        .HasForeignKey("Personaper_id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Cab_Movimiento_Persona");
+                        .IsRequired();
 
                     b.HasOne("EntityFrameworkNetCore_6.Models.Entity.Tipo_Movimiento", "Tipo_Movimiento")
                         .WithMany("Cab_Movimientos")
-                        .HasForeignKey("tip_mov_id")
+                        .HasForeignKey("Tipo_Movimientotip_mov_id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Cab_Movimiento_Tipo_Movimiento");
+                        .IsRequired();
 
                     b.HasOne("EntityFrameworkNetCore_6.Models.Entity.Usuario", "Usuario")
-                        .WithMany("Cab_Movimientos")
-                        .HasForeignKey("usu_id")
+                        .WithMany()
+                        .HasForeignKey("Usuariousu_id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Cab_Movimiento_Usuario");
+                        .IsRequired();
 
                     b.Navigation("Persona");
 
@@ -337,17 +351,15 @@ namespace EntityFrameworkNetCore_6.Migrations
                 {
                     b.HasOne("EntityFrameworkNetCore_6.Models.Entity.Cab_Movimiento", "Cab_Movimiento")
                         .WithMany("Det_Movimientos")
-                        .HasForeignKey("cab_mov_id")
+                        .HasForeignKey("Cab_Movimientocab_mov_id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Det_Movimiento_Cab_Movimiento");
+                        .IsRequired();
 
                     b.HasOne("EntityFrameworkNetCore_6.Models.Entity.Producto", "Producto")
                         .WithMany("Det_Movimientos")
-                        .HasForeignKey("pro_id")
+                        .HasForeignKey("Productopro_id")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Det_Movimiento_Producto");
+                        .IsRequired();
 
                     b.Navigation("Cab_Movimiento");
 
@@ -387,11 +399,6 @@ namespace EntityFrameworkNetCore_6.Migrations
                 });
 
             modelBuilder.Entity("EntityFrameworkNetCore_6.Models.Entity.Tipo_Movimiento", b =>
-                {
-                    b.Navigation("Cab_Movimientos");
-                });
-
-            modelBuilder.Entity("EntityFrameworkNetCore_6.Models.Entity.Usuario", b =>
                 {
                     b.Navigation("Cab_Movimientos");
                 });

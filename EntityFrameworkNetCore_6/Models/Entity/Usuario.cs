@@ -11,5 +11,7 @@
         public string usu_usuario { get; set; } = null!;
         public string usu_clave { get; set; } = null!;
         public Boolean usu_estado { get; set; }
+
+        public List<Cab_Movimiento> Cab_Movimientos { get; set; } = new List<Cab_Movimiento>();
     }
 }

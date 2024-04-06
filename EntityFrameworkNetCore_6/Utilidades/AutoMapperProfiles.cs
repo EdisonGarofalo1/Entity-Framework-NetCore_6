@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EntityFrameworkNetCore_6.Models.Dto.CategoriaDto;
+using EntityFrameworkNetCore_6.Models.Dto.ProductoDto;
 using EntityFrameworkNetCore_6.Models.Entity;
 
 namespace EntityFrameworkNetCore_6.Utilidades
@@ -11,6 +12,9 @@ namespace EntityFrameworkNetCore_6.Utilidades
         {
 
             CreateMap<CategoriaDTO, Categoria>();
+
+            CreateMap<ProductoSaveDTO, Producto>();
+            
 
         }
         }
